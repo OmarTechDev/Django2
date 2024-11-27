@@ -1,18 +1,23 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from OODjango.prototype2.main_app.Interfaces.views.basic_view import BaseAPIView
 from main_app.models import User
 from django.contrib.auth.hashers import make_password
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenObtainPairView
-from .serializers import CustomTokenObtainPairSerializer
+from main_app.serializers.users import CustomTokenObtainPairSerializer, UserSerializer
 
-class RegisterUserView(APIView):
+class RegisterUserView(BaseAPIView):
     """
     Vista para registrar nuevos usuarios.
     """
+    def get_data(self, request):
+        users= User.objects.all()
+        serializer = UserSerializer(users, many=True)
+        return Response(serializer.data)
 
-    def post(self, request):
+    def post_data(self, request):
         email = request.data.get('email')
         username = request.data.get('username')
         password = request.data.get('password')
