@@ -1,5 +1,5 @@
-from typing import TypedDict
+from typing import Union, TypedDict
 
 class ResponseBody(TypedDict):
-    body: dict
+    body: Union[dict,str]
     message: str

@@ -1,9 +1,12 @@
+from wsgiref.validate import validator
+
 from rest_framework.viewsets import ViewSet
 from main_app.handlers.api_gateway_response import ApiGateWayResponse
 from main_app.models.estate import Estate
 from main_app.request_validator.estate_validator_1 import EstateValidator1
 from main_app.request_validator.estate_validator_2 import EstateValidator2
 from main_app.serializers.estate_serializer import EstateSerializer
+from main_app.services.estate.estate_service_1 import EstateService1
 
 
 class EstateViewSet(ViewSet):
@@ -21,6 +24,7 @@ class EstateViewSet(ViewSet):
             serializer = EstateSerializer(data = request.data)
             serializer.is_valid(raise_exception=True)
             data = serializer.validated_data
+            #validators = ["verify.validador1", "verify.validador1"]
             validators = [
                 EstateValidator1(),
                 EstateValidator2()
@@ -28,6 +32,11 @@ class EstateViewSet(ViewSet):
             for validator in validators:
                 validator.validate(data)
 
+            service = EstateService1()
+            data = service.operate(data)
+            #concepto por reflexion instanciar los validadores,
+            serializer = EstateSerializer(data=data)
+            serializer.is_valid(raise_exception=True)
             serializer.save()
             return ApiGateWayResponse.success_response(serializer.data)
         except Exception as e:
