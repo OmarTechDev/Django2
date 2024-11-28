@@ -9,11 +9,11 @@ class ApiGateWayResponse:
     def __response(body: ResponseBody,code: int):
         return Response(status=code,data = body)
 
-    @staticmethod
-    def exception_response(exc):
-        if isinstance(exc,CustomError):
-            return ApiGateWayResponse.__response(exc.to_json(),code= exc.status_code)
-        return ApiGateWayResponse.__response({"body": str(exc),"message":"error"},code=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    # @staticmethod
+    # def exception_response(exc):
+    #     if isinstance(exc,CustomError):
+    #         return ApiGateWayResponse.__response(exc.to_json(),code= exc.status_code)
+    #     return ApiGateWayResponse.__response({"body": str(exc),"message":"error"},code=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     @staticmethod
     def success_response(data:dict):
