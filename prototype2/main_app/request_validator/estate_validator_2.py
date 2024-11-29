@@ -5,6 +5,6 @@ class EstateValidator2(ValidatorInterface):
 
     def validate(self, data: dict) -> bool:
         if data.get("rooms") <= 0:
-            raise BadRequestError("Validator - Estate: El precio es inferior a 1")
+            raise BadRequestError("Validator - Estate: Tiene que existir al menos una habitacion")
         else:
             return True

@@ -48,6 +48,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    #'main_app.middleware.validator_middleware.ValidatorMiddleware',
 ]
 
 ROOT_URLCONF = 'prototype2.urls'
